@@ -1,0 +1,11 @@
+:root {
+    --bg-color: #00FF00;
+}
+body {
+    font-family: Georgia, "Times New Roman",
+          Times, serif;
+    background-image: url('/static/bookshelf.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
