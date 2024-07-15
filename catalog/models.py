@@ -32,6 +32,7 @@ class Product(models.Model):
     price = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    manufactured_at = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         # Строковое отображение объекта
