@@ -161,5 +161,3 @@ cython_debug/
 .idea
 .DS_Store
 database.ini/
-migrations/
-
