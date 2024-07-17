@@ -1,0 +1,132 @@
+[
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "product_name": "Колобок",
+      "description": "Сказка детская",
+      "image": "",
+      "category": 7,
+      "price": 250,
+      "created_at": "2024-07-17T10:09:24.183Z",
+      "updated_at": "2024-07-17T10:09:24.183Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "product_name": "Война и Мир",
+      "description": "Роман Л.Н. Толстого в 4-х томах",
+      "image": "",
+      "category": 3,
+      "price": 1500,
+      "created_at": "2024-07-17T10:09:59.171Z",
+      "updated_at": "2024-07-17T10:09:59.171Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "product_name": "Война миров",
+      "description": "В хорошем состоянии. Любимая книга",
+      "image": "",
+      "category": 5,
+      "price": 350,
+      "created_at": "2024-07-17T10:10:34.669Z",
+      "updated_at": "2024-07-17T10:10:34.669Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+      "product_name": "Сказки русские",
+      "description": "Замечательные сказки для малышей",
+      "image": "",
+      "category": 7,
+      "price": 450,
+      "created_at": "2024-07-17T10:11:14.237Z",
+      "updated_at": "2024-07-17T10:11:14.238Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+      "product_name": "Евгений Онегин",
+      "description": "Всемирно известный роман о неразделенной любви",
+      "image": "",
+      "category": 3,
+      "price": 900,
+      "created_at": "2024-07-17T10:11:52.632Z",
+      "updated_at": "2024-07-17T10:11:52.632Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+      "product_name": "Десять негритят",
+      "description": "Королева жанра - А.Кристи и ее незабываемое произведение",
+      "image": "",
+      "category": 2,
+      "price": 500,
+      "created_at": "2024-07-17T10:12:42.674Z",
+      "updated_at": "2024-07-17T10:12:42.674Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 8,
+    "fields": {
+      "product_name": "Стихи А.С. Пушкина",
+      "description": "Томик стихов в хорошем состоянии. Читалось не так много, как хотелось бы",
+      "image": "",
+      "category": 6,
+      "price": 150,
+      "created_at": "2024-07-17T10:13:38.284Z",
+      "updated_at": "2024-07-17T10:13:38.284Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 9,
+    "fields": {
+      "product_name": "Гарри Поттер",
+      "description": "Серия книг о мальчике-волшебнике",
+      "image": "",
+      "category": 4,
+      "price": 15000,
+      "created_at": "2024-07-17T10:14:19.265Z",
+      "updated_at": "2024-07-17T10:14:19.265Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 10,
+    "fields": {
+      "product_name": "Мастер и Маргарита",
+      "description": "М.В. Булгаков. Состояние отличное. Красочная обложка",
+      "image": "catalog/image/master_i_margarita.jpg",
+      "category": 3,
+      "price": 1500,
+      "created_at": "2024-07-17T10:16:57.450Z",
+      "updated_at": "2024-07-17T10:16:57.450Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 11,
+    "fields": {
+      "product_name": "Хроники Амбера",
+      "description": "Целый мир, созданный Р.Желязны в 10 книгах",
+      "image": "",
+      "category": 5,
+      "price": 60000,
+      "created_at": "2024-07-17T10:17:48.767Z",
+      "updated_at": "2024-07-17T10:17:48.767Z"
+    }
+  }
+]
