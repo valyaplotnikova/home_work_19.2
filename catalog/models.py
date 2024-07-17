@@ -73,3 +73,31 @@ class Category(models.Model):
         verbose_name = "категория"  # Настройка для наименования одного объекта
         verbose_name_plural = "категории"  # Настройка для наименования набора объектов
         ordering = ["category_name"]
+
+
+class Contacts(models.Model):
+    user_name = models.CharField(
+        max_length=150,
+        verbose_name="Имя пользователя",
+        help_text="Ведите имя пользователя",
+    )
+    phone = models.CharField(
+        max_length=50,
+        verbose_name="Номер телефона",
+        help_text="Ведите номер телефона",
+    )
+    massage = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Сообщение",
+        help_text="Ведите сообщение",
+    )
+
+    def __str__(self):
+        # Строковое отображение объекта
+        return f'{self.user_name} {self.phone}'
+
+    class Meta:
+        verbose_name = "контакты"  # Настройка для наименования одного объекта
+        verbose_name_plural = "контакты"  # Настройка для наименования набора объектов
+        ordering = ["user_name"]
