@@ -1,13 +1,16 @@
 import json
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from catalog.models import Product
 
 
 def home(request):
-    print(Product.objects.all().order_by('-created_at')[:5])
-    return render(request, 'catalog/home.html')
+    product_list = Product.objects.all()
+    context = {
+        "object_list": product_list
+    }
+    return render(request, 'catalog/home.html', context)
 
 
 def contacts(request):
@@ -24,3 +27,12 @@ def contacts(request):
             file.write('\n')
 
     return render(request, 'catalog/contacts.html')
+
+
+def about_product(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    context = {
+        "product": product
+    }
+    return render(request, 'catalog/about_product.html', context)
+
