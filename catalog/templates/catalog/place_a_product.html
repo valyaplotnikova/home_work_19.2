@@ -1,0 +1,54 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+
+<div class="pricing-header px-3 py-3 pt-md-2 pb-md-2 col-12 text-center bg-light-subtle border border-primary-subtle rounded-3">
+    <h1 class="display-4">Разместите свою книгу</h1>
+</div>
+<div class="container">
+    <div class="row text-start pt-md-4">
+
+            <div class="col-4 margin-left: 80px">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Разместите свой продукт</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="" class="form-floating">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="product_name">Название книги</label>
+                                <input type="text" name="product_name" class="form-control" id="product_name"
+                                       placeholder="Название книги"
+                                       required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description">Описание книги</label>
+                                <input type="text" name="description" class="form-control" id="description"
+                                       placeholder="Описание книги"
+                                       required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="category">Жанр книги</label>
+                                <input type="text" name="category" class="form-control" id="category"
+                                       placeholder="Жанр книги"
+                                       required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="price">Цена</label>
+                                <input type="number" name="price" class="form-control" id="price"
+                                       placeholder="Цена" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message">Сообщение</label>
+                                <textarea name="message" class="form-control" id="message" placeholder="Ваше сообщение"
+                                          required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Сохранить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
