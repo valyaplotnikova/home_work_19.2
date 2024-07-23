@@ -1,14 +1,19 @@
 import json
 
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 
-from catalog.models import Product
+from catalog.models import Product, Contacts
 
 
 def home(request):
     product_list = Product.objects.all()
+    paginator = Paginator(product_list, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        "object_list": product_list
+        "object_list": product_list,
+        'page_obj': page_obj
     }
     return render(request, 'catalog/home.html', context)
 
@@ -26,7 +31,11 @@ def contacts(request):
             json.dump(data, file, ensure_ascii=False)
             file.write('\n')
 
-    return render(request, 'catalog/contacts.html')
+    contacts_list = Contacts.objects.all()
+    context = {
+            'contacts': contacts_list
+        }
+    return render(request, 'catalog/contacts.html', context)
 
 
 def about_product(request, pk):
@@ -36,3 +45,6 @@ def about_product(request, pk):
     }
     return render(request, 'catalog/about_product.html', context)
 
+
+def place_a_product(request):
+    return render(request, 'catalog/place_a_product.html')
