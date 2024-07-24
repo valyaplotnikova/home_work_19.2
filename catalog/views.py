@@ -1,8 +1,9 @@
 import json
 
 from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
+from catalog.forms import AddProductForm
 from catalog.models import Product, Contacts
 
 
@@ -47,4 +48,16 @@ def about_product(request, pk):
 
 
 def place_a_product(request):
-    return render(request, 'catalog/place_a_product.html')
+    if request.method == 'POST':
+        form = AddProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    else:
+        form = AddProductForm()
+
+    context = {
+        "form": form
+    }
+    return render(request, 'catalog/place_a_product.html', context)
