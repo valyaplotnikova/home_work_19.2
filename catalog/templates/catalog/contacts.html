@@ -32,24 +32,14 @@
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">Свяжитесь с нами</h4>
                 </div>
-                <div class="card-body">
-                    <form method="post" action="" class="form-floating">
+                <div class="card-body pt-md-10 pb-md-10">
+                    <form method="post" action="" class="form-input">
                         {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="name">Имя</label>
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Ваше имя"
-                                   required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="phone">Телефон</label>
-                            <input type="text" name="phone" class="form-control" id="phone"
-                                   placeholder="Контактный телефон" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="message">Сообщение</label>
-                            <textarea name="message" class="form-control" id="message" placeholder="Ваше сообщение"
-                                      required></textarea>
-                        </div>
+                        <div class="form-error">{{ form.non_field_errors }}</div>
+                            {% for f in form %}
+                            <label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
+                            <div class="form-error">{{ f.errors }}</div>
+                            {% endfor %}
                         <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Отправить</button>
                     </form>
                 </div>

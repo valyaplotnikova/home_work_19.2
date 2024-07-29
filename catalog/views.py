@@ -1,63 +1,28 @@
-import json
+from django.urls import reverse_lazy
 
-from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView, DetailView, CreateView, FormView
 
-from catalog.forms import AddProductForm
+
+from catalog.forms import AddContactForm
 from catalog.models import Product, Contacts
 
 
-def home(request):
-    product_list = Product.objects.all()
-    paginator = Paginator(product_list, 3)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    context = {
-        "object_list": product_list,
-        'page_obj': page_obj
-    }
-    return render(request, 'catalog/home.html', context)
+class ProductListView(ListView):
+    model = Product
+    paginate_by = 3
 
 
-def contacts(request):
-
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        phone = request.POST.get('phone')
-        message = request.POST.get('message')
-        data = [{'name': name, 'phone': phone, 'message': message}]
-
-        print(f'{name}({phone}) - {message}')
-        with open('fixtures/contacts.json', 'a', encoding='UTF-8') as file:
-            json.dump(data, file, ensure_ascii=False)
-            file.write('\n')
-
-    contacts_list = Contacts.objects.all()
-    context = {
-            'contacts': contacts_list
-        }
-    return render(request, 'catalog/contacts.html', context)
+class ProductDetailView(DetailView):
+    model = Product
 
 
-def about_product(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    context = {
-        "product": product
-    }
-    return render(request, 'catalog/about_product.html', context)
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ('product_name', 'description', 'image', 'category', 'price')
+    success_url = reverse_lazy('product_list')
 
 
-def place_a_product(request):
-    if request.method == 'POST':
-        form = AddProductForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('/')
-
-    else:
-        form = AddProductForm()
-
-    context = {
-        "form": form
-    }
-    return render(request, 'catalog/place_a_product.html', context)
+class AddContact(FormView):
+    form_class = AddContactForm
+    template_name = 'catalog/contacts.html'
+    success_url = reverse_lazy('product_list')

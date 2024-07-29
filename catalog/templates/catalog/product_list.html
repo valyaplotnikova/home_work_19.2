@@ -12,7 +12,7 @@
 
 <div class="container">
     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-        {% for product in page_obj %}
+        {% for product in object_list %}
         <div class="col-3">
             <div class="card mb-4 box-shadow">
 
@@ -24,7 +24,7 @@
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                         <li>- {{ product.category }}</li>
                         <li>- {{ product.description|truncatechars:100 }}</li>
-                        <li> <img src="{{ product.image | media_filter }}" width="200" height="300">></li>
+                        <li><img src="{{ product.image | media_filter }}" width="200" height="300">></li>
                     </ul>
                     <a class="btn btn-primary" href="{% url 'about_product' product.pk %}" role="button">Посмотреть</a>
                 </div>
@@ -35,6 +35,7 @@
     </div>
 
 </div>
+
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
         {% for p in page_obj.paginator.page_range %}
@@ -42,5 +43,6 @@
         {% endfor %}
     </ul>
 </nav>
+
 
 {% endblock %}
