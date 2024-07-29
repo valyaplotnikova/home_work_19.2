@@ -1,9 +1,10 @@
 from django import forms
-from .models import Category, Product
+from .models import Category, Product, Contacts
 
 
 class AddProductForm(forms.ModelForm):
     category = forms.ModelChoiceField(queryset=Category.objects.all(), empty_label="Жанр не выбран", label="Жанр книги")
+
     class Meta:
         model = Product
         fields = ['product_name', 'description', 'image', 'category', 'price']
@@ -13,4 +14,16 @@ class AddProductForm(forms.ModelForm):
         }
         labels = {
             'price': 'Цена книги'
+        }
+
+
+class AddContactForm(forms.ModelForm):
+
+    class Meta:
+        model = Contacts
+        fields = ['user_name', 'phone', 'massage']
+        widgets = {
+            'user_name': forms.TextInput(attrs={'class': 'form-input'}),
+            'phone': forms.TextInput(attrs={'class': 'form-input'}),
+            'massage': forms.Textarea(attrs={'cols': 30, 'rows': 5}),
         }
