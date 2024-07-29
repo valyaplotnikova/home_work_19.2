@@ -9,38 +9,26 @@
             книги</h3>
     </div>
 </div>
-
 <div class="container">
     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-        {% for product in page_obj %}
         <div class="col-3">
             <div class="card mb-4 box-shadow">
-
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">Цена: {{ product.price }}</h4>
+                    <h4 class="my-0 font-weight-normal">{{product.product_name}}</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">{{ product.product_name }}</h1>
+                    <h1 class="card-title pricing-card-title">Цена: {{product.price}}</h1>
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                        <li>- {{ product.category }}</li>
-                        <li>- {{ product.description|truncatechars:100 }}</li>
-                        <li> <img src="{{ product.image | media_filter }}" width="200" height="300">></li>
+                        <li>Жанр: {{product.category}}</li>
+                        <li>О книге: {{product.description}}</li>
+                        <li> <img src="{{ product.image | media_filter }}" width="200" height="300"></li>
+                        <li>Дата размещения объявления: {{ product.created_at }}</li>
                     </ul>
-                    <a class="btn btn-primary" href="{% url 'about_product' product.pk %}" role="button">Посмотреть</a>
+                    <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
                 </div>
 
             </div>
         </div>
-        {% endfor %}
     </div>
-
 </div>
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-        {% for p in page_obj.paginator.page_range %}
-        <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
-        {% endfor %}
-    </ul>
-</nav>
-
 {% endblock %}
