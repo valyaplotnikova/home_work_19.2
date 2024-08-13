@@ -101,3 +101,41 @@ class Contacts(models.Model):
         verbose_name = "контакты"  # Настройка для наименования одного объекта
         verbose_name_plural = "контакты"  # Настройка для наименования набора объектов
         ordering = ["user_name"]
+
+
+class Version(models.Model):
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        verbose_name="Название книги",
+        help_text="Ведите название книги",
+        related_name="products",
+    )
+    version_number = models.CharField(
+        max_length=10,
+        null=True,
+        blank=True,
+        verbose_name="Год издания",
+        help_text="Введите год издания",
+    )
+    version_name = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        verbose_name="Название издательства",
+        help_text="Введите название издательства",
+    )
+    is_version_active = models.BooleanField(
+        default=False,
+        verbose_name="Последнее издание",
+        help_text="Является ли издание последним?",
+    )
+
+    def __str__(self):
+        # Строковое отображение объекта
+        return f'{self.product} {self.version_number}'
+
+    class Meta:
+        verbose_name = "версия"  # Настройка для наименования одного объекта
+        verbose_name_plural = "версии"  # Настройка для наименования набора объектов
+
