@@ -27,6 +27,8 @@
                         <li><img src="{{ product.image | media_filter }}" width="200" height="300">></li>
                     </ul>
                     <a class="btn btn-primary" href="{% url 'about_product' product.pk %}" role="button">Посмотреть</a>
+                    <a class="btn btn-primary" href="{% url 'update_product' product.pk %}" role="button">Изменить</a>
+                    <a class="btn btn-primary" href="{% url 'delete_product' product.pk %}" role="button">Удалить</a>
                 </div>
 
             </div>

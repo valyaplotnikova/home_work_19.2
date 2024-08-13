@@ -1,0 +1,27 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-4 pb-md-4 col-12 text-center bg-light-subtle border border-primary-subtle rounded-3">
+    <h1 class="display-4">MyStore</h1>
+    <div>
+        <h3 class="lead">MyStore - это отличный вариант для тех, кто хотел бы купить или продать уже прочитанные
+            книги</h3>
+    </div>
+</div>
+
+<div class ="col-12">
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body pt-10 my-md-5 pt-md-5">
+                    <form method="post">
+                        {% csrf_token %}
+                        <h1>Хотите удалить книгу "{{ object.title }}"?</h1>
+                        <button type="submit" class="btn btn-danger">Подтвердить</button>
+                        <a href="{% url 'blog_list' %}" class="btn btn-warning">Отмена</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
