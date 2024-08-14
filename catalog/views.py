@@ -1,15 +1,33 @@
+from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 from django.views.generic import ListView, DetailView, CreateView, FormView, UpdateView, DeleteView
+from django.views.generic.base import ContextMixin
 
-from catalog.forms import AddContactForm, AddProductForm, VersionForm
-from catalog.models import Product, Contacts, Version
+from catalog.forms import AddContactForm, AddProductForm, VersionForm, VersionFormset
+from catalog.models import Product, Contacts, Version, Category
 
 
 class ProductListView(ListView):
     model = Product
     paginate_by = 3
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        products = self.get_queryset()
+        for product in products:
+            active_versions = Version.objects.filter(product_id=product.pk, is_version_active=True)
+            if active_versions:
+                product.active_name = active_versions.last().version_name
+                product.active_number = active_versions.last().version_number
+            else:
+                product.active_name = 'Отсутствует'
+                product.active_number = 'Отсутствует'
+
+        context_data['object_list'] = products
+
+        return context_data
 
 
 class ProductDetailView(DetailView):
@@ -17,7 +35,7 @@ class ProductDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        ProductFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+        ProductFormset = inlineformset_factory(Product, Version, form=VersionForm, formset=VersionFormset, extra=1)
         if self.request.method == 'POST':
             formset = ProductFormset(self.request.POST, instance=self.object)
         else:
@@ -35,28 +53,30 @@ class ProductCreateView(CreateView):
 class ProductUpdateView(UpdateView):
     model = Product
     form_class = AddProductForm
-    success_url = reverse_lazy('product_list')
+
+    def get_success_url(self):
+        return reverse('about_product', args=[self.kwargs.get('pk')])
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        ProductFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+        ProductFormset = inlineformset_factory(Product, Version, VersionForm, formset=VersionFormset, extra=1)
+
         if self.request.method == 'POST':
-            formset = ProductFormset(self.request.POST, instance=self.object)
+            context_data['formset'] = ProductFormset(self.request.POST, instance=self.object)
         else:
-            formset = ProductFormset(instance=self.object)
-        context_data['formset'] = formset
+            context_data['formset'] = ProductFormset(instance=self.object)
         return context_data
 
     def form_valid(self, form):
         context_data = self.get_context_data()
         formset = context_data['formset']
-        for form in formset:
-            print(form.errors)
+
         if form.is_valid() and formset.is_valid():
             self.object = form.save()
             formset.instance = self.object
             formset.save()
             return super().form_valid(form)
+
         else:
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
