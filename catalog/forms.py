@@ -1,5 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.forms import BaseInlineFormSet
+
 from .models import Category, Product, Contacts, Version
 
 
@@ -9,10 +11,7 @@ class AddProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['product_name', 'description', 'image', 'category', 'price']
-        widgets = {
-            'product_name': forms.TextInput(attrs={'class': 'form-input'}),
-            'description': forms.Textarea(attrs={'cols': 50, 'rows': 5}),
-        }
+
         labels = {
             'price': 'Цена книги'
         }
@@ -50,3 +49,14 @@ class VersionForm(forms.ModelForm):
     class Meta:
         model = Version
         fields = ['product', 'version_number', 'version_name', 'is_version_active']
+
+
+class VersionFormset(BaseInlineFormSet):
+    def clean(self):
+        super().clean()
+        count = 0
+        for form in self.forms:
+            if form.instance.is_version_active:
+                count += 1
+        if count > 1:
+            raise forms.ValidationError("Может быть только 1 активная версия")
