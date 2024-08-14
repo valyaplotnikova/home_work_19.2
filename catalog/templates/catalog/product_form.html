@@ -1,52 +1,44 @@
+
 {% extends 'catalog/base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
-
 <div class="container">
+    <form class="row" method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="col-6 ">
+            <div class="card">
+                <div class="card-header">
 
-        <form class="row" method="post" action=""  enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="col-6 margin-left: 80px">
-                <div class="card mb-4 box-shadow">
-                    <div class="card-header">
-                        {% if object %}
-                        <h4 class="my-0 font-weight-normal">Редактирование данных о книге</h4>
-                        {% else %}
-                        <h4 class="my-0 font-weight-normal">Разместите данные о книге</h4>
-                        {% endif %}
-                    </div>
-                    <div class="card-body">
+                    {% if object %}
+                    <h4 class="my-0 font-weight-normal">Редактирование данных о книге</h4>
+                    {% else %}
+                    <h4 class="my-0 font-weight-normal">Разместите данные о книге</h4>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    {{ form|crispy }}
 
-                        <div class="form-error">{{ form.non_field_errors }}</div>
-                        {% for f in form %}
-                        <label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
-                        <div class="form-error">{{ f.errors }}</div>
-                        {% endfor %}
-                        <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Сохранить</button>
-
-                    </div>
+                    <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Сохранить</button>
                 </div>
             </div>
-
-
-            <div class="col-6">
-                {% if object %}
-                <div class="card">
-                    <div class="card-header">
-                        {% if object %}
-                        <h4 class="my-0 font-weight-normal">Редактирование данных об издании</h4>
-                        {% else %}
-                        <h4 class="my-0 font-weight-normal">Разместите данные об издании</h4>
-                        {% endif %}
-                    </div>
-                    <div class="card-body">
-                        {{ formset.management_form.form }}
-                        {% for form in formset.forms %}
-                        {{ form.as_p }}
-                        {% endfor %}
-                    </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    {% if object %}
+                    <h4 class="my-0 font-weight-normal">Редактирование данных об издании</h4>
+                    {% else %}
+                    <h4 class="my-0 font-weight-normal">Разместите данные об издании</h4>
+                    {% endif %}
                 </div>
-                {% endif %}
+                <div class="card-body">
+                    {{ formset.management_form}}
+                    {% for form in formset.forms %}
+                    {{ form|crispy }}
+                    {% endfor %}
+                </div>
             </div>
-        </form>
+        </div>
+    </form>
 </div>
 {% endblock %}
