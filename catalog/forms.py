@@ -53,10 +53,9 @@ class VersionForm(forms.ModelForm):
 
 class VersionFormset(BaseInlineFormSet):
     def clean(self):
-        super().clean()
         count = 0
         for form in self.forms:
             if form.instance.is_version_active:
                 count += 1
-        if count > 1:
-            raise forms.ValidationError("Может быть только 1 активная версия")
+                if count > 1:
+                    raise forms.ValidationError("Может быть только 1 активная версия")

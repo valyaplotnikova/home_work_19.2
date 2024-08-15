@@ -68,17 +68,16 @@ class ProductUpdateView(UpdateView):
         return context_data
 
     def form_valid(self, form):
-        context_data = self.get_context_data()
-        formset = context_data['formset']
-
-        if form.is_valid() and formset.is_valid():
-            self.object = form.save()
+        """Метод для сохранения формы при редактировании"""
+        formset = self.get_context_data()['formset']
+        self.object = form.save()
+        if formset.is_valid():
             formset.instance = self.object
             formset.save()
-            return super().form_valid(form)
-
         else:
-            return self.render_to_response(self.get_context_data(form=form, formset=formset))
+            form.add_error(None, ValidationError("Only one version can be active at a time."))
+            return self.form_invalid(form)
+        return super().form_valid(form)
 
 
 class ProductDeleteView(DeleteView):
