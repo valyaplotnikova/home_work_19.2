@@ -7,4 +7,6 @@ pillow==10.4.0
 ipython==8.26.0
 django-crispy-forms==2.3
 crispy-bootstrap4==2024.1
-
+django-phonenumber-field==8.0.0
+django-phonenumbers==1.0.1
+phonenumbers==8.13.43
