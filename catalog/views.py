@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
@@ -44,13 +45,21 @@ class ProductDetailView(DetailView):
         return context_data
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(CreateView, LoginRequiredMixin):
     model = Product
     form_class = AddProductForm
     success_url = reverse_lazy('product_list')
 
+    def form_valid(self, form):
+        product = form.save()
+        user = self.request.user
+        product.owner = user
+        product.save()
 
-class ProductUpdateView(UpdateView):
+        return super().form_valid(form)
+
+
+class ProductUpdateView(UpdateView, LoginRequiredMixin):
     model = Product
     form_class = AddProductForm
 
@@ -80,7 +89,7 @@ class ProductUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(DeleteView, LoginRequiredMixin):
     model = Product
     success_url = reverse_lazy('product_list')
 
