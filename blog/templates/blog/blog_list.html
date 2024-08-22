@@ -12,6 +12,8 @@
 
 <div class="container">
     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+        <div class="col-3"></div>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'blog:create_blog' %}">Разместить статью</a>
         {% for product in object_list %}
         <div class="col-6">
             <div class="card mb-4 box-shadow">

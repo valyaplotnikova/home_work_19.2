@@ -1,5 +1,7 @@
 from django.db import models, connection
 
+from users.models import User
+
 
 # Create your models here.
 class Product(models.Model):
@@ -32,6 +34,12 @@ class Product(models.Model):
     price = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    owner = models.ForeignKey(User,
+                              verbose_name='Владелец',
+                              on_delete=models.SET_NULL,
+                              help_text='Укажите владельца',
+                              blank=True,
+                              null=True)
 
     def __str__(self):
         # Строковое отображение объекта
@@ -138,4 +146,3 @@ class Version(models.Model):
     class Meta:
         verbose_name = "версия"  # Настройка для наименования одного объекта
         verbose_name_plural = "версии"  # Настройка для наименования набора объектов
-
