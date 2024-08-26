@@ -59,3 +59,11 @@ class VersionFormset(BaseInlineFormSet):
                 count += 1
                 if count > 1:
                     raise forms.ValidationError("Может быть только 1 активная версия")
+
+
+class ProductModeratorForm(forms.ModelForm):
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), empty_label="Жанр не выбран", label="Жанр книги")
+
+    class Meta:
+        model = Product
+        fields = ('description', 'category', 'is_published')
