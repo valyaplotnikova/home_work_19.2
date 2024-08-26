@@ -1,13 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, PermissionDenied
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 
 from django.views.generic import ListView, DetailView, CreateView, FormView, UpdateView, DeleteView
-from django.views.generic.base import ContextMixin
 
-from catalog.forms import AddContactForm, AddProductForm, VersionForm, VersionFormset
-from catalog.models import Product, Contacts, Version, Category
+
+from catalog.forms import AddContactForm, AddProductForm, VersionForm, VersionFormset, ProductModeratorForm
+from catalog.models import Product, Version
 
 
 class ProductListView(ListView):
@@ -59,12 +59,12 @@ class ProductCreateView(CreateView, LoginRequiredMixin):
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView, LoginRequiredMixin):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
-    form_class = AddProductForm
+
 
     def get_success_url(self):
-        return reverse('about_product', args=[self.kwargs.get('pk')])
+        return reverse('catalog:about_product', args=[self.kwargs.get('pk')])
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -75,6 +75,16 @@ class ProductUpdateView(UpdateView, LoginRequiredMixin):
         else:
             context_data['formset'] = ProductFormset(instance=self.object)
         return context_data
+
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.owner:
+            return AddProductForm
+        elif (user.has_perm('can_edit_description') and user.has_perm('can_edit_category')
+              and user.has_perm('can_edit_is_published')):
+            return ProductModeratorForm
+        else:
+            raise PermissionDenied
 
     def form_valid(self, form):
         """Метод для сохранения формы при редактировании"""

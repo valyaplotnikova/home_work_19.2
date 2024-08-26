@@ -34,6 +34,7 @@ class Product(models.Model):
     price = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    is_published = models.BooleanField(default=True)
     owner = models.ForeignKey(User,
                               verbose_name='Владелец',
                               on_delete=models.SET_NULL,
@@ -54,6 +55,11 @@ class Product(models.Model):
         verbose_name = "продукт"  # Настройка для наименования одного объекта
         verbose_name_plural = "продукты"  # Настройка для наименования набора объектов
         ordering = ["product_name", "price", "category"]
+        permissions = [
+            ('can_edit_description', 'Can edit description'),
+            ('can_edit_category', 'Can edit category'),
+            ('can_edit_is_published', 'Can edit is published')
+        ]
 
 
 class Category(models.Model):
