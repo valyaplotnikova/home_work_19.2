@@ -20,6 +20,8 @@
 
 
     {% for product in object_list %}
+
+        {% if product.is_published %}
         <div class="col-3">
             <div class="card mb-4 box-shadow">
 
@@ -38,15 +40,18 @@
                         <li><img src="{{ product.image | media_filter }}" width="200" height="300"></li>
                     </ul>
                     <a class="btn btn-primary" href="{% url 'catalog:about_product' product.pk %}" role="button">Посмотреть</a>
-                    {% if user.is_authenticated %}
+
+                    {% if user.is_authenticated and request.user == product.owner or perms.catalog.can_edit_description and perms.catalog.can_edit_category and perms.catalog.can_edit_is_published %}
 
                     <a class="btn btn-primary" href="{% url 'catalog:update_product' product.pk %}" role="button">Изменить</a>
                     <a class="btn btn-primary" href="{% url 'catalog:delete_product' product.pk %}" role="button">Удалить</a>
-                {% endif %}
+                    {% endif %}
+
                 </div>
 
             </div>
         </div>
+        {% endif %}
         {% endfor %}
     </div>
 
