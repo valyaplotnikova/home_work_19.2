@@ -1,0 +1,48 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+
+<div class="pricing-header px-3 py-3 pt-md-4 pb-md-4 col-12 text-center bg-light-subtle border border-primary-subtle rounded-3">
+    <h1 class="display-4">MyStore</h1>
+    <div>
+        <h3 class="lead">MyStore - это отличный вариант для тех, кто хотел бы купить или продать уже прочитанные
+            книги</h3>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+
+
+    {% for category in object_list %}
+
+        <div class="col-3">
+            <div class="card mb-4 box-shadow">
+
+                <div class="card-header">
+                    <h1 class="my-0 font-weight-normal">{{ category.category_name }}</h1>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title pricing-card-title">{{ category.description }}</h4>
+
+                </div>
+
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+
+</div>
+
+<!--<nav aria-label="Page navigation example">-->
+<!--    <ul class="pagination justify-content-center">-->
+<!--        {% for p in page_obj.paginator.page_range %}-->
+<!--        <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--</nav>-->
+
+
+{% endblock %}

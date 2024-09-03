@@ -7,12 +7,23 @@ from django.views.generic import ListView, DetailView, CreateView, FormView, Upd
 
 
 from catalog.forms import AddContactForm, AddProductForm, VersionForm, VersionFormset, ProductModeratorForm
-from catalog.models import Product, Version
+from catalog.models import Product, Version, Category
+from catalog.services import get_categories_from_cache, get_product_from_cache
+
+
+class CategoryListView(ListView):
+    model = Category
+
+    def get_queryset(self):
+        return get_categories_from_cache()
 
 
 class ProductListView(ListView):
     model = Product
     paginate_by = 3
+
+    def get_queryset(self):
+        return get_product_from_cache()
 
     def get_context_data(self, *args, **kwargs):
         context_data = super().get_context_data(*args, **kwargs)
